@@ -35,24 +35,34 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 - Install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install)
 
-- Initial setup: _If you just generated this project, this step has been done for you._
+- Initialize an EdgeDB project
 
   ```sh
-  npm run setup
+  edgedb project init
   ```
 
+  This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
+
+- Seed the database
+
+  ```sh
+  npm run seed
+  ```
+
+  This creates some sample notes and an initial user with the following credentials:
+
+  - email `root@remix.run`
+  - password: `remix+edgedb=awesome`
+
 - Start dev server:
+
+  This starts your app in development mode, rebuilding assets on file changes.
 
   ```sh
   npm run dev
   ```
 
-This starts your app in development mode, rebuilding assets on file changes.
-
-The database seed script creates a new user with some data you can use to get started:
-
-- Email: `root@remix.run`
-- Password: `remix+edgedb=awesome`
+  Go to [localhost:3000](http://localhost:3000), click "Sign up" to create a new account, and explore the application.
 
 ### Relevant code:
 
@@ -79,32 +89,25 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Create a Fly app for your application
 
-Replace `my-remix-app` with a unique name of your own choosing.
+  Replace `my-remix-app` with a unique name of your own choosing.
 
-```sh
-$ APPNAME=my-remix-app
-$ fly launch --name $APPNAME
-Creating app in /Users/colinmcd94/Documents/edgedb/remix
-Scanning source code
-Detected a Dockerfile app
-Selected App Name: edgedb-remix-1
-Automatically selected personal organization: Colin McDonnell
-? Select region: sea (Seattle, Washington (US))
-Created app edgedb-remix-1 in organization personal
-Wrote config file fly.toml
-? Would you like to setup a Postgresql database now? No
-? Would you like to deploy now? No
-Your app is ready. Deploy with `flyctl deploy`
+  ```sh
+  $ APPNAME=my-remix-app
+  $ fly launch --name $APPNAME
+  Creating app in /path/to/app
+  Scanning source code
+  Detected a Dockerfile app
+  Selected App Name: <app name>
+  Automatically selected personal organization: <your name>
+  ? Select region: <selected region>
+  Created app <app name> in organization personal
+  Wrote config file fly.toml
+  ? Would you like to setup a Postgresql database now? No
+  ? Would you like to deploy now? No
+  Your app is ready. Deploy with `flyctl deploy`
+  ```
 
-
-```
-
-You'll be presented with a seriesThen update the value of the `APPNAME` environment variable inside `deploy.yml` as well.
-
-```yml
-env:
-  APPNAME: my-remix-app
-```
+You'll be presented with a series of prompts. Answer `No` if asked whether you'd like to deploy a database or deploy the application. Once completed, the command will generate a `fly.toml` file for your application.
 
 - Deploy an EdgeDB instance to Fly
 

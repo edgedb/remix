@@ -15,7 +15,7 @@
     "format": "prettier --write .",
     "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-    "seed": "npx ts-node -T dbschema/seed.ts",
+    "seed": "npx esbuild-runner dbschema/seed.ts",
     "setup": "edgedb migrate && yarn seed",
     "start": "remix-serve build",
     "start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
