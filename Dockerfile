@@ -3,7 +3,9 @@ FROM node:16-bullseye-slim as base
 
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
-ENV EDGEDB_DSN=edgedb://...
+
+# disable hostname verification
+ENV EDGEDB_CLIENT_TLS_SECURITY insecure
 
 # Install openssl
 RUN apt-get update && apt-get install -y openssl sqlite3
@@ -50,7 +52,7 @@ ENV NODE_ENV="production"
 
 
 # add shortcut for connecting to database CLI
-RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli
+# RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli
 
 WORKDIR /myapp
 

@@ -11,18 +11,17 @@ npx create-remix --template edgedb/remix
 ## What's in the stack
 
 - [EdgeDB](https://www.edgedb.com) for the database
-- [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
-- Production-ready [SQLite Database](https://sqlite.org)
+- Deployment on [Fly](https://fly.io) with [Docker](https://www.docker.com/)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
-- [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
-- Email/Password Authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
+- [GitHub Actions](https://github.com/features/actions) for deployment on merge to production and staging environments
+- Email/password authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
 - Styling with [Tailwind](https://tailwindcss.com/)
 - End-to-end testing with [Cypress](https://cypress.io)
-- Local third party request mocking with [MSW](https://mswjs.io)
+- Local third-party request mocking with [MSW](https://mswjs.io)
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 - Code formatting with [Prettier](https://prettier.io)
 - Linting with [ESLint](https://eslint.org)
-- Static Types with [TypeScript](https://typescriptlang.org)
+- Static types with [TypeScript](https://typescriptlang.org)
 
 Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
 
@@ -34,7 +33,7 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 ## Development
 
-- Install EdgeDB CLI: [edgedb.com/install](https://www.edgedb.com/install)
+- Install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install)
 
 - Initial setup: _If you just generated this project, this step has been done for you._
 
@@ -52,7 +51,7 @@ This starts your app in development mode, rebuilding assets on file changes.
 
 The database seed script creates a new user with some data you can use to get started:
 
-- Email: `rachel@remix.run`
+- Email: `root@remix.run`
 - Password: `remix+edgedb=awesome`
 
 ### Relevant code:
@@ -69,42 +68,50 @@ This Remix Stack comes with two GitHub Actions that handle automatically deployi
 
 Prior to your first deployment, you'll need to do a few things:
 
-- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
-
-- Sign up and log in to Fly
+- Install the [Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and signup/login.
 
   ```sh
-  fly auth signup
+  fly auth signup     # sign up
+  fly auth login      # login
   ```
 
   > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
 
-- Create two apps on Fly, one for staging and one for production:
+- Create a Fly app for your application.
 
-  ```sh
-  fly create blog-tutorial-2fae
-  fly create blog-tutorial-2fae-staging
-  ```
+```sh
+APPNAME=my-remix-app
+fly create $APPNAME
+```
 
-  - Initialize Git.
+- Deploy an EdgeDB instance to Fly.
+
+Follow EdgeDB's [Fly.io deployment guide](https://www.edgedb.com/docs/guides/deployment/fly_io) for step-by-step instructions. At the end of this process, you will have a [DSN](https://www.edgedb.com/docs/reference/connection) which can be used to connect to the instance. It should have the following form:
+
+`edgedb://<user>:<password>@<appname>.internal:<port>`
+
+Add this value to your application as a [Fly secret](https://fly.io/docs/reference/secrets/) called `EDGEDB_DSN`.
+
+````sh
+fly secrets set EDGEDB_DSN=<paste DSN here> --app $APPNAME
+
+- Initialize Git.
+
+Create a new [GitHub Repository](https://repo.new). Copy the provided `git@github.com:<reponame>.git` URL, then initialize the repo locally, set the remote, and create an initial commit. **Do not push your app yet!**
 
   ```sh
   git init
-  ```
-
-- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
-
-  ```sh
   git remote add origin <ORIGIN_URL>
+  git add .
+  git commit -m "Initial commit"
   ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
-- Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
+- Add a `SESSION_SECRET` to your Fly app secrets. This wi to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blog-tutorial-2fae
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blog-tutorial-2fae-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app $APPNAME
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
@@ -112,15 +119,14 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh
-  fly volumes create data --size 1 --app blog-tutorial-2fae
-  fly volumes create data --size 1 --app blog-tutorial-2fae-staging
+  fly volumes create data --size 1 --app $APPNAME
   ```
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
-### Connecting to your database
+<!-- ### Connecting to your database -->
 
-The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`.
+<!-- The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`. -->
 
 ### Getting Help with Deployment
 
@@ -172,3 +178,4 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 ### Formatting
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
+````

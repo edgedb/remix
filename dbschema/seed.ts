@@ -4,7 +4,7 @@ import e from "../dbschema/edgeql-js";
 const client = createClient();
 
 async function seed() {
-  const email = "rachel@remix.run";
+  const email = "root@remix.run";
   const pass = "remix+edgedb=awesome";
   const user = e.select(e.User, (u) => ({
     filter: e.op(u.email, "=", email),
