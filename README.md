@@ -68,7 +68,7 @@ This Remix Stack comes with two GitHub Actions that handle automatically deployi
 
 Prior to your first deployment, you'll need to do a few things:
 
-- Install the [Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and signup/login.
+- Install the [Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and signup/login
 
   ```sh
   fly auth signup     # sign up
@@ -77,34 +77,58 @@ Prior to your first deployment, you'll need to do a few things:
 
   > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
 
-- Create a Fly app for your application.
+- Create a Fly app for your application
+
+Replace `my-remix-app` with a unique name of your own choosing.
 
 ```sh
-APPNAME=my-remix-app
-fly create $APPNAME
+$ APPNAME=my-remix-app
+$ fly launch --name $APPNAME
+Creating app in /Users/colinmcd94/Documents/edgedb/remix
+Scanning source code
+Detected a Dockerfile app
+Selected App Name: edgedb-remix-1
+Automatically selected personal organization: Colin McDonnell
+? Select region: sea (Seattle, Washington (US))
+Created app edgedb-remix-1 in organization personal
+Wrote config file fly.toml
+? Would you like to setup a Postgresql database now? No
+? Would you like to deploy now? No
+Your app is ready. Deploy with `flyctl deploy`
+
+
 ```
 
-- Deploy an EdgeDB instance to Fly.
+You'll be presented with a seriesThen update the value of the `APPNAME` environment variable inside `deploy.yml` as well.
+
+```yml
+env:
+  APPNAME: my-remix-app
+```
+
+- Deploy an EdgeDB instance to Fly
 
 Follow EdgeDB's [Fly.io deployment guide](https://www.edgedb.com/docs/guides/deployment/fly_io) for step-by-step instructions. At the end of this process, you will have a [DSN](https://www.edgedb.com/docs/reference/connection) which can be used to connect to the instance. It should have the following form:
 
-`edgedb://<user>:<password>@<appname>.internal:<port>`
+`edgedb://<user>:<password>@<hostname>:<port>`
 
 Add this value to your application as a [Fly secret](https://fly.io/docs/reference/secrets/) called `EDGEDB_DSN`.
 
-````sh
+```sh
 fly secrets set EDGEDB_DSN=<paste DSN here> --app $APPNAME
+```
 
-- Initialize Git.
+- Initialize a Git repo
 
 Create a new [GitHub Repository](https://repo.new). Copy the provided `git@github.com:<reponame>.git` URL, then initialize the repo locally, set the remote, and create an initial commit. **Do not push your app yet!**
 
-  ```sh
-  git init
-  git remote add origin <ORIGIN_URL>
-  git add .
-  git commit -m "Initial commit"
-  ```
+```sh
+git init
+git remote add origin <ORIGIN_URL>
+git add .
+git commit -m "Initial commit"
+git branch -M main
+```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
 
@@ -114,13 +138,7 @@ Create a new [GitHub Repository](https://repo.new). Copy the provided `git@githu
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app $APPNAME
   ```
 
-  If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
-
-- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
-
-  ```sh
-  fly volumes create data --size 1 --app $APPNAME
-  ```
+  If you don't have `openssl` installed, feel free to use any tool that will generate a random string, like a password manager or online tool.
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
@@ -178,4 +196,7 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 ### Formatting
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
-````
+
+```
+
+```

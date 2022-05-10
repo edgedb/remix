@@ -1,50 +1,40 @@
-app = "blog-tutorial-2fae"
+# fly.toml file generated for edgedb-remix-1 on 2022-05-10T15:41:25-07:00
+
+app = "edgedb-remix-1"
+
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = [ ]
+processes = []
+
+[env]
 
 [experimental]
-allowed_public_ports = [ ]
-auto_rollback = true
-cmd = "start.sh"
-entrypoint = "sh"
-
-[mounts]
-source = "data"
-destination = "/data"
+  allowed_public_ports = []
+  auto_rollback = true
 
 [[services]]
-internal_port = 8_080
-processes = [ "app" ]
-protocol = "tcp"
-script_checks = [ ]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
   [services.concurrency]
-  hard_limit = 25
-  soft_limit = 20
-  type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
   [[services.ports]]
-  handlers = [ "http" ]
-  port = 80
-  force_https = true
+    force_https = true
+    handlers = ["http"]
+    port = 80
 
   [[services.ports]]
-  handlers = [ "tls", "http" ]
-  port = 443
+    handlers = ["tls", "http"]
+    port = 443
 
   [[services.tcp_checks]]
-  grace_period = "1s"
-  interval = "15s"
-  restart_limit = 0
-  timeout = "2s"
-
-  [[services.http_checks]]
-  interval = 10_000
-  grace_period = "5s"
-  method = "get"
-  path = "/healthcheck"
-  protocol = "http"
-  timeout = 2_000
-  tls_skip_verify = false
-  headers = { }
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

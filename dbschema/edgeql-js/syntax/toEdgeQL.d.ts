@@ -1,0 +1,15 @@
+import { $expr_Array, $expr_NamedTuple, $expr_Tuple, $expr_TuplePath } from "edgedb/dist/reflection";
+import type { $expr_Literal } from "edgedb/dist/reflection/literal";
+import type { $expr_PathLeaf, $expr_PathNode, $expr_TypeIntersection } from "edgedb/dist/reflection/path";
+import type { $expr_Cast } from "./cast";
+import type { $expr_Detached } from "./detached";
+import type { $expr_For, $expr_ForVar } from "./for";
+import type { $expr_Function, $expr_Operator } from "edgedb/dist/reflection/funcops";
+import type { $expr_Insert, $expr_InsertUnlessConflict } from "./insert";
+import type { $expr_Param, $expr_WithParams } from "./params";
+import type { $expr_Delete, $expr_Select } from "./select";
+import type { $expr_Set } from "./set";
+import type { $expr_Update } from "./update";
+import type { $expr_Alias, $expr_With } from "./with";
+export declare type SomeExpression = $expr_PathNode | $expr_PathLeaf | $expr_Literal | $expr_Set | $expr_Array | $expr_Tuple | $expr_NamedTuple | $expr_TuplePath | $expr_Cast | $expr_Select | $expr_Delete | $expr_Update | $expr_Insert | $expr_InsertUnlessConflict | $expr_Function | $expr_Operator | $expr_For | $expr_ForVar | $expr_TypeIntersection | $expr_Alias | $expr_With | $expr_WithParams | $expr_Param | $expr_Detached;
+export declare function $toEdgeQL(this: any): string;
