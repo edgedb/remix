@@ -62,6 +62,7 @@ COPY --from=edgedb /usr/bin/edgedb /usr/bin/edgedb
 
 COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
+COPY --from=build /myapp/dbschema/migrations /myapp/dbschema/migrations
 RUN echo $(edgedb --version)
 ADD . .
 
