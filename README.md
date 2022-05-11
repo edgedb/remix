@@ -147,7 +147,7 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin <ORIGIN_URL>
+git remote add origin <paste git url here>
 ```
 
 ### 6. Add a `FLY_API_TOKEN` to your GitHub repo
@@ -170,9 +170,15 @@ Every commit to your `main` branch will trigger a re-deployment to your producti
 
 <!-- The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`. -->
 
-### Getting Help with Deployment
+### 8. View the final deployment
 
-If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
+Once the GitHub Actions have completed, your application should be live on the internet! Fly automatically provides a public-facing URL for your application: `<appname>.fly.dev`. Visit this URL for a fully-functional cloud hosted version of the application.
+
+Check your `fly.toml` file for your app name, or go to the [Fly dashboard](https://fly.io/dashboard) to see more information about the application.
+
+> **Getting Help with Deployment**
+>
+> If you run into any issues deploying to Fly, make sure you've followed all of the steps above carefully. Go to the [Fly dashboard](https://fly.io/dashboard) and view the deployment logs; this will often be helpful for debugging. If you're still having issues [open an issue](https://github.com/edgedb/remix/issues/new) on the `edgedb/remix` repo.
 
 ## GitHub Actions
 
