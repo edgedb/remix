@@ -37,8 +37,9 @@ COPY --from=deps /myapp/node_modules /myapp/node_modules
 # ADD prisma .
 # RUN npx prisma generate
 
-ADD dbschema .
-RUN npx edgeql-js
+# for now, query builder is checked into Git
+# ADD dbschema .
+# RUN npx edgeql-js
 
 ADD . .
 RUN npm run build
