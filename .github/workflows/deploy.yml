@@ -94,6 +94,10 @@ jobs:
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
 
+      - uses: edgedb/setup-edgedb@v1
+      - name: Initialize project
+        run: edgedb project init --non-interactive
+
       # - uses: edgedb/setup-edgedb@v1
       
       # - name: 🛠 Setup Database
