@@ -8,3 +8,4 @@ node_modules
 /cypress/videos
 
 /app/styles/tailwind.css
+.DS_Store

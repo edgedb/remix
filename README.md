@@ -125,12 +125,14 @@ fly secrets set EDGEDB_DSN=<paste DSN here> --app $APPNAME
 
 Create a new [GitHub Repository](https://repo.new). Copy the provided `git@github.com:<reponame>.git` URL, then initialize the repo locally, set the remote, and create an initial commit. **Do not push your app yet!**
 
+git@github.com:colinhacks/remix-indie-test.git
+
 ```sh
 git init
-git remote add origin <ORIGIN_URL>
 git add .
 git commit -m "Initial commit"
 git branch -M main
+git remote add origin <ORIGIN_URL>
 ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
@@ -143,7 +145,17 @@ git branch -M main
 
   If you don't have `openssl` installed, feel free to use any tool that will generate a random string, like a password manager or online tool.
 
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+- Push to deploy
+
+Push to the `main` branch to deploy the app with GitHub Actions.
+
+```sh
+git push -u origin main
+```
+
+Every commit to your `main` branch will trigger a re-deployment to your production environment.
+
+  <!-- , and every commit to your `dev` branch will trigger a deployment to your staging environment. -->
 
 <!-- ### Connecting to your database -->
 
@@ -199,7 +211,3 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 ### Formatting
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
-
-```
-
-```
