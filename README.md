@@ -1,6 +1,6 @@
-# The EdgeDB Remix Stack — Indiepop
+# Hyperpop — The EdgeDB Remix Stack
 
-![The Remix Indiepop Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
+![The Hyperpop Stack](https://i.imgur.com/iLq8t1u.jpg)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
@@ -25,12 +25,6 @@ npx create-remix --template edgedb/remix
 
 Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
 
-## Quickstart
-
-Click this button to create a [Gitpod](https://gitpod.io) workspace with the project set up and Fly pre-installed
-
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
-
 ## Development
 
 - Scaffold your project
@@ -39,9 +33,9 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
   npx create-remix --template edgedb/remix
   ```
 
-- Install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install)
-
 - Initialize an EdgeDB project
+
+  If you haven't already, install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install). Then run the following command from inside your project directory.
 
   ```sh
   edgedb project init
@@ -59,6 +53,14 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
   - email `root@remix.run`
   - password: `remix+edgedb=awesome`
+
+- Create a `.env` file
+
+  This file contains a value for the `SESSION_SECRET` environment variable.
+
+  ```sh
+  cp .env.example .env
+  ```
 
 - Start dev server:
 
@@ -99,7 +101,7 @@ Prior to your first deployment, you'll need to do a few things:
 
   ```sh
   $ fly launch --no-deploy
-  An existing fly.toml file was found for app edgedb-remix
+  An existing fly.toml file was found for app "edgedb-remix"
   ? Would you like to copy its configuration to the new app? Yes
   Creating app in /path/to/project
   Scanning source code
@@ -114,9 +116,7 @@ Prior to your first deployment, you'll need to do a few things:
   Your app is ready. Deploy with `flyctl deploy`
   ```
 
-  Once the app has been created the existing `fly.toml` file will be overwritten with the newly created app's information; this is intentional.
-
-  You'll be presented with a series of prompts. Answer `No` if asked whether to deploy a database or deploy the application. Once completed, the command will generate a `fly.toml` file for your application.
+  You'll be presented with a series of prompts. Answer `No` if asked whether to deploy a database or deploy the application. Once the app has been created the existing `fly.toml` file will be overwritten with the newly created app's information (this is intentional).
 
 - Deploy an EdgeDB instance to Fly
 

@@ -7,7 +7,6 @@ export function User(id: string) {
   }));
 }
 export async function getNote(params: { id: string; userId: string }) {
-  console.log(params);
   const userNotes = e.select(e.Note, (note) => ({
     filter: e.op(note.user, "=", User(params.userId)),
   }));
