@@ -62,8 +62,7 @@ This project uses cookie-based authentication that relies on a secret token. It 
 SESSION_SECRET="super-duper-s3cret"
 ```
 
-In the Deployment section, we'll describe how to set a value for
-`SESSION_SECRET` in production.
+In the Deployment section, we'll describe how to set a value for `SESSION_SECRET` in production. We also set this variable in `deploy.yml` so it's available when running end-to-end tests in GitHub Actions.
 
 ### 5. Start the server
 
