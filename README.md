@@ -1,6 +1,6 @@
 # Hyperpop — The EdgeDB Remix Stack
 
-![The Hyperpop Stack](https://i.imgur.com/iLq8t1u.jpg)
+![The Hyperpop Remix Stack](https://user-images.githubusercontent.com/3084745/167937035-b84dda16-617f-456f-923e-dafcb4a6697c.png)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
