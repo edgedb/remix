@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y openssl sqlite3
 # Install all node_modules, including dev dependencies
 FROM base as deps
 WORKDIR /myapp
-ADD package.json package-lock.lock ./
+ADD package.json package-lock.json ./
 RUN npm install --production=false
 
 
