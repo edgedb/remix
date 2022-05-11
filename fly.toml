@@ -1,5 +1,3 @@
-# fly.toml file generated for old-thunder-7624 on 2022-05-10T22:58:02-07:00
-
 app = "edgedb-remix"
 
 kill_signal = "SIGINT"
