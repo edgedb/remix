@@ -62,7 +62,7 @@ COPY --from=edgedb /usr/bin/edgedb /usr/bin/edgedb
 
 COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
-RUN /usr/bin/edgedb --version
+RUN echo $(edgedb --version)
 ADD . .
 
 CMD ["npm", "start"]

@@ -6,6 +6,9 @@ on:
       - dev
   pull_request: {}
 
+env:
+  SESSION_SECRET: secret-${{ github.sha }}
+
 jobs:
   lint:
     name: ⬣ ESLint
