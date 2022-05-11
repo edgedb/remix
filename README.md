@@ -23,62 +23,54 @@ npx create-remix --template edgedb/remix
 - Linting with [ESLint](https://eslint.org)
 - Static types with [TypeScript](https://typescriptlang.org)
 
-Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
+Not a fan of bits of the stack? Fork it and make it your own!
 
 ## Development
 
-- Scaffold your project
+### 1. Scaffold your project
 
-  ```sh
-  npx create-remix --template edgedb/remix
-  ```
+```sh
+npx create-remix --template edgedb/remix
+```
 
-- Initialize an EdgeDB project
+### 2. Initialize an EdgeDB project
 
-  If you haven't already, install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install). Then run the following command from inside your project directory.
+If you haven't already, install the `edgedb` CLI: [edgedb.com/install](https://www.edgedb.com/install). Then run the following command from inside your project directory.
 
-  ```sh
-  edgedb project init
-  ```
+```sh
+edgedb project init
+```
 
-  This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
+This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
 
-- Seed the database
+### 3. Seed the database
 
-  ```sh
-  npm run seed
-  ```
+```sh
+npm run seed
+```
 
-  This creates some sample notes and an initial user with the following credentials:
+This creates some sample notes and an initial user with the following credentials:
 
-  - email `root@remix.run`
-  - password: `remix+edgedb=awesome`
+- email `root@remix.run`
+- password: `remix+edgedb=awesome`
 
-- Create a `.env` file
+### 4. Create a `.env` file
 
-  This file contains a value for the `SESSION_SECRET` environment variable.
+This file contains a value for the `SESSION_SECRET` environment variable, which is used for cookie-based authentication.
 
-  ```sh
-  cp .env.example .env
-  ```
+```sh
+cp .env.example .env
+```
 
-- Start dev server:
+### 5. Start the server
 
-  This starts your app in development mode, rebuilding assets on file changes.
+This starts your app in development mode, rebuilding assets on file changes.
 
-  ```sh
-  npm run dev
-  ```
+```sh
+npm run dev
+```
 
-  Go to [localhost:3000](http://localhost:3000), click "Sign up" to create a new account, and explore the application.
-
-### Relevant code:
-
-This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with EdgeDB and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
-
-- creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
-- user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
-- creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
+Go to [localhost:3000](http://localhost:3000), click "Sign up" to create a new account, and explore the application.
 
 ## Deployment
 
@@ -184,7 +176,13 @@ Check your `fly.toml` file for your app name, or go to the [Fly dashboard](https
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
-## Testing
+## Project structure
+
+This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with EdgeDB and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
+
+- creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
+- user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
+- creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
 
 ### Cypress
 
