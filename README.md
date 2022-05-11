@@ -86,81 +86,83 @@ This Remix Stack comes with two GitHub Actions that handle automatically deployi
 
 Prior to your first deployment, you'll need to do a few things:
 
-- Install the [Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and signup/login
+### 1. Install the [Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and signup/login
 
-  ```sh
-  fly auth signup     # sign up
-  fly auth login      # login
-  ```
+```sh
+fly auth signup     # sign up
+fly auth login      # login
+```
 
-  > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
+> **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
 
-- Create a Fly app for your application
+### 2. Create a Fly app for your application
 
-  Run `fly launch --no-deploy` to create a new Fly app. You'll be prompted for an app name; if you leave the prompt blank a name will be generated for you.
+Run `fly launch --no-deploy` to create a new Fly app. You'll be prompted for an app name; if you leave this blank, a name will be generated for you.
 
-  ```sh
-  $ fly launch --no-deploy
-  An existing fly.toml file was found for app "edgedb-remix"
-  ? Would you like to copy its configuration to the new app? Yes
-  Creating app in /path/to/project
-  Scanning source code
-  Detected a Dockerfile app
-  ? App Name (leave blank to use an auto-generated name):
-  Automatically selected personal organization: Colin McDonnell
-  ? Select region: sea (Seattle, Washington (US))
-  Created app old-thunder-7624 in organization personal
-  Wrote config file fly.toml
-  ? Would you like to setup a Postgresql database now? No
-  ? Would you like to deploy now? No
-  Your app is ready. Deploy with `flyctl deploy`
-  ```
+```sh
+$ fly launch --no-deploy
+An existing fly.toml file was found for app "edgedb-remix"
+? Would you like to copy its configuration to the new app? Yes
+Creating app in /path/to/project
+Scanning source code
+Detected a Dockerfile app
+? App Name (leave blank to use an auto-generated name):
+Automatically selected personal organization: Colin McDonnell
+? Select region: sea (Seattle, Washington (US))
+Created app old-thunder-7624 in organization personal
+Wrote config file fly.toml
+Your app is ready. Deploy with `flyctl deploy`
+```
 
-  You'll be presented with a series of prompts. Answer `No` if asked whether to deploy a database or deploy the application. Once the app has been created the existing `fly.toml` file will be overwritten with the newly created app's information (this is intentional).
+Once the app has been created the existing `fly.toml` file will be overwritten with the newly created app's information (this is intentional).
 
-- Deploy an EdgeDB instance to Fly
+### 3. Deploy an EdgeDB instance to Fly
 
-  Follow EdgeDB's [Fly.io deployment guide](https://www.edgedb.com/docs/guides/deployment/fly_io) for step-by-step instructions. At the end of this process, you will have a [DSN](https://www.edgedb.com/docs/reference/connection) which can be used to connect to the instance. It should have the following form:
+Follow EdgeDB's [Fly.io deployment guide](https://www.edgedb.com/docs/guides/deployment/fly_io) for step-by-step instructions. At the end of this process, you will have a [DSN](https://www.edgedb.com/docs/reference/connection) which can be used to connect to the instance. It should have the following form:
 
-  `edgedb://<user>:<password>@<hostname>:<port>`
+`edgedb://<user>:<password>@<hostname>:<port>`
 
-  Add this value to your application as a [Fly secret](https://fly.io/docs/reference/secrets/) called `EDGEDB_DSN`.
+Add this value to your application as a [Fly secret](https://fly.io/docs/reference/secrets/) called `EDGEDB_DSN`.
 
-  ```sh
-  fly secrets set EDGEDB_DSN=<paste DSN here> --app $APPNAME
-  ```
+```sh
+fly secrets set EDGEDB_DSN=<paste DSN here>
+```
 
-- Initialize a Git repo
+### 4. Add a `SESSION_SECRET` to your Fly app secrets
 
-  Create a new [GitHub Repository](https://repo.new). Copy the provided `git@github.com:<reponame>.git` URL, then initialize the repo locally, set the remote, and create an initial commit. **Do not push your app yet!**
+To do this you can run the following commands:
 
-  ```sh
-  git init
-  git add .
-  git commit -m "Initial commit"
-  git branch -M main
-  git remote add origin <ORIGIN_URL>
-  ```
+```sh
+fly secrets set SESSION_SECRET=$(openssl rand -hex 32)
+```
 
-- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
+If you don't have `openssl` installed, feel free to use any tool that will generate a random string, like a password manager or online tool.
 
-- Add a `SESSION_SECRET` to your Fly app secrets. This wi to do this you can run the following commands:
+### 5. Initialize a Git repo
 
-  ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32)
-  ```
+Create a new [GitHub Repository](https://repo.new) and Copy the provided `git@github.com:<reponame>.git` URL. Then execute the following commands. Don't `git push` yet—we have a bit more configuration to do first.
 
-  If you don't have `openssl` installed, feel free to use any tool that will generate a random string, like a password manager or online tool.
+```sh
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin <ORIGIN_URL>
+```
 
-- Push to GitHub
+### 6. Add a `FLY_API_TOKEN` to your GitHub repo
 
-  Push to the `main` branch to deploy the app with GitHub Actions.
+To do this, [generate a token](https://web.fly.io/user/personal_access_tokens/new) via the Fly dashboard, copy it, and add it to to your repo via `Settings > Secrets > Actions`. Click "New repository secret", name it `FLY_API_TOKEN`, and paste the generated token.
 
-  ```sh
-  git push -u origin main
-  ```
+### 7. Push to GitHub
 
-  Every commit to your `main` branch will trigger a re-deployment to your production environment.
+Now we're ready to push this to GitHub. This will start the deployment process via GitHub Actions.
+
+```sh
+git push -u origin main
+```
+
+Every commit to your `main` branch will trigger a re-deployment to your production environment.
 
   <!-- , and every commit to your `dev` branch will trigger a deployment to your staging environment. -->
 
