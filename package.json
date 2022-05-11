@@ -1,6 +1,7 @@
 {
-  "name": "blog-tutorial-2fae",
+  "name": "edgedb-remix",
   "private": true,
+  "version": "1.0.0",
   "description": "",
   "license": "",
   "sideEffects": false,
