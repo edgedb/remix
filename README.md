@@ -54,13 +54,16 @@ This creates some sample notes and an initial user with the following credential
 - email `root@remix.run`
 - password: `remix+edgedb=awesome`
 
-### 4. Create a `.env` file
+### 4. Create `.env`
 
-This file contains a value for the `SESSION_SECRET` environment variable, which is used for cookie-based authentication.
+This project uses cookie-based authentication that relies on a secret token. It isn't secure to hard-code this value directly into your source code, so we'll use an environment variables called `SESSION_STATE`. To set this variable in development, create a `.env` file and add the following line. Remix automatically loads environment variables from this file when running in development mode.
 
-```sh
-cp .env.example .env
 ```
+SESSION_SECRET="super-duper-s3cret"
+```
+
+In the Deployment section, we'll describe how to set a value for
+`SESSION_SECRET` in production.
 
 ### 5. Start the server
 
