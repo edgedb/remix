@@ -4,28 +4,31 @@
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
-```
-npx create-remix --template edgedb/remix
-```
-
 ## What's in the stack
 
 - [EdgeDB](https://www.edgedb.com) for the database
-- Deployment on [Fly](https://fly.io) with [Docker](https://www.docker.com/)
-- Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
-- [GitHub Actions](https://github.com/features/actions) for deployment on merge to production and staging environments
+- Deployment on [Fly](https://fly.io)
+  - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
+- [GitHub Actions](https://github.com/features/actions)
 - Email/password authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
-- Styling with [Tailwind](https://tailwindcss.com/)
-- End-to-end testing with [Cypress](https://cypress.io)
-- Local third-party request mocking with [MSW](https://mswjs.io)
-- Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
-- Code formatting with [Prettier](https://prettier.io)
-- Linting with [ESLint](https://eslint.org)
-- Static types with [TypeScript](https://typescriptlang.org)
+- [Tailwind](https://tailwindcss.com/)
+- [Cypress](https://cypress.io)
+- [MSW](https://mswjs.io) (request mocking)
+- [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
+- [Prettier](https://prettier.io)
+- [ESLint](https://eslint.org)
+- [TypeScript](https://typescriptlang.org)
 
-Not a fan of bits of the stack? Fork it and make it your own!
+### Other EdgeDB + Remix stacks
+
+Not a fan of bits of the stack? Fork it and make it your own! Or use one of these other community-maintained stacks that combine the gloriousness of EdgeDB and Remix:
+
+- [jkcorrea/remix-chop-suey-stack](https://github.com/jkcorrea/remix-chop-suey-stack)
+- [jacob-ebey/remix-edgedb](https://github.com/jacob-ebey/remix-edgedb)
 
 ## Development
+
+> View the live application: [https://edgedb-remix.fly.dev](https://edgedb-remix.fly.dev/)
 
 ### 1. Scaffold your project
 
