@@ -101,9 +101,9 @@ Creating app in /path/to/project
 Scanning source code
 Detected a Dockerfile app
 ? App Name (leave blank to use an auto-generated name):
-Automatically selected personal organization: Colin McDonnell
+Automatically selected personal organization
 ? Select region: sea (Seattle, Washington (US))
-Created app old-thunder-7624 in organization personal
+Created app <random name> in organization personal
 Wrote config file fly.toml
 Your app is ready. Deploy with `flyctl deploy`
 ```
