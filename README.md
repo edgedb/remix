@@ -25,6 +25,7 @@ Not a fan of bits of the stack? Fork it and make it your own! Or use one of thes
 
 - [jkcorrea/remix-chop-suey-stack](https://github.com/jkcorrea/remix-chop-suey-stack)
 - [jacob-ebey/remix-edgedb](https://github.com/jacob-ebey/remix-edgedb)
+- [anubra266/chakra-remix-stack-blues-edge](https://github.com/anubra266/chakra-remix-stack-blues-edge)
 
 ## Development
 
