@@ -39,7 +39,7 @@
     "@remix-run/serve": "^1.4.3",
     "@remix-run/server-runtime": "^1.4.3",
     "bcryptjs": "^2.4.3",
-    "edgedb": "^0.20.9",
+    "edgedb": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "tiny-invariant": "^1.2.0"
