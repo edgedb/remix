@@ -1,5 +1,6 @@
 import type {
   LinksFunction,
+  LoaderArgs,
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
@@ -30,7 +31,7 @@ type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
-export const loader = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   return json<LoaderData>({
     user: await getUser(request),
   });

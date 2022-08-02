@@ -1,5 +1,6 @@
 import type {
   ActionFunction,
+  LoaderArgs,
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
@@ -12,7 +13,7 @@ import { getUserId, createUserSession } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
